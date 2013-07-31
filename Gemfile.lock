@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/pkurek/flatui-rails.git
+  remote: https://github.com/pkurek/flatui-rails
   revision: b8f07194c13865cdf21ee4e18058f7661694d4a7
   specs:
     flatui-rails (0.0.4)

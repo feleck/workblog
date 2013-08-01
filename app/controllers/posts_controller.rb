@@ -3,9 +3,7 @@ class PostsController < ApplicationController
   expose_decorated(:posts)
   expose_decorated(:post)
   expose_decorated(:comments)
-  #expose_decorated(:comment)
-  #expose(:comments, ancestor: :post)
-  
+ 
 
   def index
   end

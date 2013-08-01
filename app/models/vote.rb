@@ -5,7 +5,7 @@ class Vote
   belongs_to :user
   belongs_to :comment
 
-  def value=(vote)
+  def value1=(vote)
     vote += vote
     if vote == 3
       comment.abusive = true

@@ -2,6 +2,7 @@
 .post__tags-list {
   float: left;
   height: auto;
+  margin-bottom: 20px;
   .tag, .tag:hover {
     padding: 6px 13px;
     font-size: 12px
@@ -29,4 +30,40 @@
   .post__body {
     margin: 15px 0;
   }
+  margin-bottom: 100px;
+}
+
+.comment--full-size {
+  .comment__body {
+    margin: 15px ;
+  }
+
+}
+
+.add_comment {
+//  margin: 5px;
+ // float: left;
+}
+
+.comment--short-size {
+  border-bottom: 1px solid #f2f2f2;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.vote_up {
+  color: green;
+  text-decoration: none;
+}
+
+
+.vote_down {
+  color: red;
+  text-decoration: none;
+  a:hover {
+    color: #0ff;
+  }
+}
+.vote_down a:hover {
+  color: #0ff;
 }

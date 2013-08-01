@@ -3,7 +3,6 @@ class PostsController < ApplicationController
   expose_decorated(:posts)
   expose_decorated(:post)
   expose_decorated(:comments)
- 
 
   def index
   end
@@ -28,6 +27,13 @@ class PostsController < ApplicationController
   end
 
   def show
+    @comments = post.comments
+    post.comments.each do |comment|
+      if comment.abusive && post.user != current_user
+        post.comments.delete(comment)
+      end
+    end
+    @comments = post.comments
   end
 
   def mark_archived
@@ -36,7 +42,9 @@ class PostsController < ApplicationController
   end
 
   def create
+#    post.user = current_user
     if post.save
+      post.user = current_user
       redirect_to action: :index
     else
       render :new

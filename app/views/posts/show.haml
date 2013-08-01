@@ -1,3 +1,4 @@
+/= render 'post'
 .post--full-size
   %h2
     = post.title
@@ -11,13 +12,12 @@
   .post__tags-list.tagsinput
     - post.tags_array.each do |tag|
       = content_tag :span, tag, class: 'tag'
-      /
-      \
 .comment--full-size
   %h2
     Comments
     %small
       = "(#{post.comments.count})"
+
 
   /- if post.comments.count == 0 #post.comments.empty?
   - if post.comments.empty?
@@ -27,9 +27,27 @@
       - post.comments.each do |comment|
         %li.comment--short-size
           /= "(#{post.comments.count})"
-          .comment__body= comment.body
-          = link_to "+  VOTE UP", '#', class: 'vote_up' 
-          = link_to "-  VOTE  DOWN", '#', class: 'vote_down'
+          - if comment.abusive
+            = "Comment abusive"
+          - else
+            .comment__body= comment.body
+            = link_to "+  VOTE UP", '#', class: 'vote_up' 
+            = link_to "-  VOTE  DOWN", '#', class: 'vote_down'
+            = current_user
+            /= comment.vote.votes_count
+
+    %ol
+      - @comments.each do |comment|
+        %li.comment--short-size
+          /= "(#{post.comments.count})"
+          - if comment.abusive
+            = "Comment abusive"
+          - else
+            .comment__body= comment.body
+            = link_to "+  VOTE UP", vote_up_post_comment_path(comment), class: 'vote_up' 
+            = link_to "-  VOTE  DOWN", '#', class: 'vote_down'
+            = current_user
+
 
   .add_comment
     = render 'comment'

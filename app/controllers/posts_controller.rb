@@ -27,13 +27,13 @@ class PostsController < ApplicationController
   end
 
   def show
-    @comments = post.comments
-    post.comments.each do |comment|
-      if comment.abusive && post.user != current_user
-        post.comments.delete(comment)
-      end
-    end
-    @comments = post.comments
+   @komments = post.comments
+#    post.comments.each do |comment|
+#      if comment.abusive && post.user != current_user
+#        #post.comments.delete(comment)
+#      end
+#    end
+   
   end
 
   def mark_archived
@@ -42,9 +42,8 @@ class PostsController < ApplicationController
   end
 
   def create
-#    post.user = current_user
+    post.user_id = current_user.id
     if post.save
-      post.user = current_user
       redirect_to action: :index
     else
       render :new

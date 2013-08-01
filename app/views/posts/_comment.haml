@@ -1,3 +1,11 @@
-= simple_form_for [post, post.comments.build], html: { class: "form-left" } do |f|
-  = f.input :body, as: :text, input_html: { cols: 50, rows: 3 }, label: 'Add comment'
-  = f.button :submit
+%ol
+  - post.comments.each do |comment|
+    %li.comment--short-size
+      /= "(#{post.comments.count})"
+      /- if comment.abusive
+      /  = "Comment abusive"
+      /- else
+      .comment__body= comment.body
+      /= link_to "+  VOTE UP", vote_up_post_comment_path(comment), class: 'vote_up' 
+      /= link_to "-  VOTE  DOWN", '#', class: 'vote_down'
+      /= current_user

@@ -5,16 +5,16 @@ class CommentsController < ApplicationController
   
   def create
     @post = Post.find(params[:post_id])
-    
-    @vote = Vote.new()
-    @comment = @post.comments.create(params[:comment])
+#    @comments = @post.comments
+#    @vote = Vote.new()
+# poprawić, żeby bez pustych commentów
+    @comment = @post.comments.build(params[:comment])
     @comment.user_id = current_user.id
     if @comment.save
       redirect_to post_path(@post)
+    else
+      redirect_to post_path(@post)
     end
-  #  if comment.create()
-  #    redirect_to post_path(post)
-  #  end
   end
 
   def mark_as_not_abusive    
@@ -23,13 +23,26 @@ class CommentsController < ApplicationController
     @comment.abusive = false
     if @comment.save
       redirect_to post_path(@post)
+    else
+
     end
   end
 
   def vote_up
     @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
+    @user = @comment.user
+    if @comment.votes.empty?
+      @vote = Vote.create(user_id: @user.id, comment_id: @comment.id)
+    end
 
+    if Vote.find_by(@user.id)
+      # flash (Cannot vote for this post again)
+    else
+
+    end
+    #@vote = 
+    @vote = Vote.create(user_id: @user.id, comment_id: @comment.id)
     #@post = Post.find(params[:post_id])
 
     #@comment = comment #Comment.find(params[:comment_id])

@@ -17,50 +17,25 @@
     Comments
     %small
       = "(#{post.comments.count})"
-
-
-  /- if post.comments.count == 0 #post.comments.empty?
-  - if post.comments.empty?
-    %p No comments!
-  - else
-    %ol
-      - post.comments.each do |comment|
-        %li.comment--short-size
-          /= "(#{post.comments.count})"
-          - if comment.abusive
-            = "Comment abusive"
-          - else
-            .comment__body= comment.body
-            = link_to "+  VOTE UP", '#', class: 'vote_up' 
-            = link_to "-  VOTE  DOWN", '#', class: 'vote_down'
-            = current_user
-            /= comment.vote.votes_count
-
-    %ol
-      - @comments.each do |comment|
-        %li.comment--short-size
-          /= "(#{post.comments.count})"
-          - if comment.abusive
-            = "Comment abusive"
-          - else
-            .comment__body= comment.body
-            = link_to "+  VOTE UP", vote_up_post_comment_path(comment), class: 'vote_up' 
-            = link_to "-  VOTE  DOWN", '#', class: 'vote_down'
-            = current_user
-
+  = post.comments.empty?
+  = post.comments.exists?
+  = post.comments.blank?
 
   .add_comment
+    = simple_form_for [post, post.comments.build], html: { class: "form-left" } do |f|
+      = f.error_notification
+      = display_base_errors post.comments.build
+      = f.input :body, as: :text, input_html: { cols: 50, rows: 3 }, label: 'Add comment'
+      = f.button :submit
+
+    /= render post.comments
+  = "(#{post.comments.count})"
+  = post.comments.empty?
+  = post.comments.exists?
+  = post.comments.blank?
+
+  /- if post.comments.count == 0 #post.comments.empty?
+  - if !post.comments.exists?
+    %p No comments!
+  - else
     = render 'comment'
-
-
-
-/<% @post.comments.each do |comment| %>
-/  <p>
-/    <strong>Commenter:</strong>
-/    <%= comment.commenter %>
-/  </p>
-/  <p>
-/    <strong>Comment:</strong>
-/    <%= comment.body %>
-/  </p>
-/<% end %>

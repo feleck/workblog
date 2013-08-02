@@ -67,3 +67,18 @@
 .vote_down a:hover {
   color: #0ff;
 }
+
+.post__button--delete, .post__button--archive {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .btn-small;
+  font-size: 12px;
+}
+
+.post__button--delete {
+  background-color: red;
+}
+
+.post__button--archive {
+  background-color: gray;
+}

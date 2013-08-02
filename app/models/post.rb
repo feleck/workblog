@@ -11,6 +11,7 @@ class Post
 
   belongs_to :user
   has_many :comments, dependent: :destroy
+  #embeds_many :comments
 
   default_scope ne(archived: true)
 

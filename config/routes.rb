@@ -13,6 +13,7 @@ Easyblog::Application.routes.draw do
         #comment :mark_as_not_abusive
         get 'mark_as_not_abusive'
         get 'vote_up'
+        get 'vote_down'
         #comment :vote_up
       end
     end

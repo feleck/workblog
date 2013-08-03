@@ -2,13 +2,15 @@
   %h2
     = post.title
     %small
-      = post.created_at
-      /= post.friendly_date
+      = #post.created_at
+      = post.friendly_date
+      /= User.find(post.user_id)
   = link_to "edit", edit_post_path(post), class: 'post__button--edit'
-
+  - if current_user.owner? post
+    = link_to "archive", mark_archived_post_path(post), method: :post, data: { confirm: 'Are you sure?' }, class: 'post__button--archive' #archive post
+    = link_to 'delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'post__button--delete'
   .post__body
     = post.body
   .post__tags-list.tagsinput
     - post.tags_array.each do |tag|
       = content_tag :span, tag, class: 'tag'
-      /

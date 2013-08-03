@@ -45,4 +45,10 @@ class User
   def to_s
     nickname.present? ? nickname : name
   end
+
+  def voted? comment
+    comment.votes.where(user_id: id).count > 0
+  end
+
+
 end

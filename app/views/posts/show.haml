@@ -1,25 +1,9 @@
-/= render 'post'
-.post--full-size
-  %h2
-    = post.title
-    %small
-      = #post.created_at
-      = post.friendly_date
-  = link_to "edit", edit_post_path(post), class: 'post__button--edit'
-  - if current_user.owner? post
-    = link_to "archive", "#", class: 'post__button--archive' #archive post
-    = link_to "delete", edit_post_path(post), class: 'post__button--delete'
-
-  .post__body
-    = post.body
-  .post__tags-list.tagsinput
-    - post.tags_array.each do |tag|
-      = content_tag :span, tag, class: 'tag'
+= render post
 .comment--full-size
   %h2
     Comments
     %small
-      = "(#{post.comments.count})"
+      /= "(#{post.comments.count})"
       = "(#{comments.count})"
   .add_comment
     = simple_form_for [post, Comment.new], html: { class: "form-left" } do |f|
@@ -27,25 +11,6 @@
       /= display_base_errors
       = f.input :body, as: :text, input_html: { cols: 50, rows: 3 }, label: 'Add comment'#false
       = f.button :submit
+  = render 'comment'
 
-  - if post.comments.empty?
-    %p No comments yet, feel free to add one!
-  - else
-    /= render 'comment'
-    %ul
-      - comments.each do |comment|
-        %li.comment--short-size
-          /= "(#{post.comments.count})"
-          /- if comment.abusive
-          /  = "Comment abusive"
-          /- else
-          .comment__body
-            = comment.body
-            = comment.votes.count
-            = 'Current user: ' + current_user.name
-            = 'Comment author: ' + comment.user.name
-            = 'Post author: ' + post.user.name
-            /= comment.user.name
-          = link_to "+  VOTE UP", vote_up_post_comment_path(post, comment), class: 'vote_up'
-          = link_to "-  VOTE  DOWN", vote_down_post_comment_path(post, comment), class: 'vote_down'
           

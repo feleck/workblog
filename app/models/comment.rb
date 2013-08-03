@@ -9,12 +9,7 @@ class Comment
   validates_presence_of :body
 
   belongs_to :post
-  #embedded_in :post, :inverse_of => :comments
   belongs_to :user
   has_many :votes
 
-  # def after_create#(vote)
-  #   #update_attribute(abusive: true)
-  #   update_attribute :abusive, true
-  # end
 end

@@ -6,6 +6,7 @@ class PostsController < ApplicationController
 #  expose_decorated(:comments, finder: :find_by_slug)
 
   def index
+    self.posts = posts.where(archived: false)
   end
 
   # def new
@@ -28,9 +29,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    if post.user != current_user
-      self.comments = post.comments.where(abusive: false)
-    end
+    self.comments = post.comments.where(abusive: false) if !current_user.owner? post
   end
 
   def mark_archived

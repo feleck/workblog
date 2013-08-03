@@ -81,9 +81,5 @@ class CommentsController < ApplicationController
     end
   end
 
-  def mark_as_abusive(comment)
-    comment.abusive = true
-    comment.save
-  end
 end
 

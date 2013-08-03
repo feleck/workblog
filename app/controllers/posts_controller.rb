@@ -3,15 +3,16 @@ class PostsController < ApplicationController
   expose_decorated(:posts)
   expose_decorated(:post)
   expose_decorated(:comments) { post.comments }
+#  expose_decorated(:comments, finder: :find_by_slug)
 
   def index
   end
 
-  def new
-  end
+  # def new
+  # end
 
-  def edit
-  end
+  # def edit
+  # end
 
   def update
     if post.save
@@ -27,23 +28,9 @@ class PostsController < ApplicationController
   end
 
   def show
-
-    @komments = Array.new(post.comments)
-    @komments.each do |kom|
-      if kom.abusive && post.user != current_user
-        @komments.delete(kom)
-      else
-        
-      end
+    if post.user != current_user
+      self.comments = post.comments.where(abusive: false)
     end
-#   @komment = Comment.new
-#   comments = post.comments
-#    post.comments.each do |comment|
-#      if comment.abusive && post.user != current_user
-#        #post.comments.delete(comment)
-#      end
-#    end
-   
   end
 
   def mark_archived
@@ -59,5 +46,7 @@ class PostsController < ApplicationController
       render :new
     end
   end
+
+
 
 end

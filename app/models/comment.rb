@@ -13,7 +13,8 @@ class Comment
   belongs_to :user
   has_many :votes
 
-  def after_create(vote)
-    update_attribute(abusive: true)
-  end
+  # def after_create#(vote)
+  #   #update_attribute(abusive: true)
+  #   update_attribute :abusive, true
+  # end
 end

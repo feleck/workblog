@@ -12,20 +12,7 @@ class Vote
 
   protected 
   def mark_abusive
-    votes = comment.votes
-    votes_down = 0
-
-    if !votes.empty?
-      votes.each do |vote|
-        if vote.value == -1
-           votes_down += 1
-        end
-        if votes_down >= 3
-          comment.update_attribute(:abusive, true)
-        end
-      end
-    end
-    
+   comment.update_attribute :abusive, true if comment.votes.where(value: -1).count >= 3
   end
 
 end

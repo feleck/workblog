@@ -20,10 +20,7 @@
     Comments
     %small
       = "(#{post.comments.count})"
-  = post.comments.empty?
-  = post.comments.exists?
-  = post.comments.blank?
-  
+      = "(#{comments.count})"
   .add_comment
     = simple_form_for [post, Comment.new], html: { class: "form-left" } do |f|
       /= f.error_notification
@@ -31,19 +28,12 @@
       = f.input :body, as: :text, input_html: { cols: 50, rows: 3 }, label: 'Add comment'#false
       = f.button :submit
 
-    /= render post.comments
-  = "(#{post.comments.count})"
-  = post.comments.empty?
-  = post.comments.exists?
-  = post.comments.blank?
-
-  /- if post.comments.count == 0 #post.comments.empty?
   - if post.comments.empty?
-    %p No comments!
+    %p No comments yet, feel free to add one!
   - else
     /= render 'comment'
     %ul
-      - post.comments.each do |comment|
+      - comments.each do |comment|
         %li.comment--short-size
           /= "(#{post.comments.count})"
           /- if comment.abusive
@@ -52,13 +42,10 @@
           .comment__body
             = comment.body
             = comment.votes.count
+            = 'Current user: ' + current_user.name
+            = 'Comment author: ' + comment.user.name
+            = 'Post author: ' + post.user.name
             /= comment.user.name
           = link_to "+  VOTE UP", vote_up_post_comment_path(post, comment), class: 'vote_up'
           = link_to "-  VOTE  DOWN", vote_down_post_comment_path(post, comment), class: 'vote_down'
-          /= current_user
-    %ol          
-      - @komments.each do |comment|
-        %li.comment--short-size
-          .comment__body
-            = comment.body
-
+          

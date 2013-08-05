@@ -12,7 +12,7 @@ class Vote
 
   protected 
   def mark_abusive
-   comment.update_attribute :abusive, true if comment.votes.where(value: -1).count >= 3
+   comment.update_attribute :abusive, true if comment.votes.where(value: -1).count = 3
   end
 
 end
